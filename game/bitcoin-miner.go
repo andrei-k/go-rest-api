@@ -19,7 +19,7 @@ import (
 // OGH is how we address the player
 const OGH = "O Great Gill Bates"
 
-// default values
+// Default values
 var year = 1
 var employees = 100
 var cash = 2800
@@ -73,7 +73,7 @@ func Play() {
 
 }
 
-// printIntroductoryParagraph prints the intro paragraph
+// Prints the intro paragraph
 func printIntroductoryParagraph() {
 	clearScreen()
 	color.Yellow(`BITCOIN MINER
@@ -100,14 +100,14 @@ Do it poorly and you will be terminated!
 `)
 }
 
-// updateComputerPrice Randomly sets the new price of computers.
-// returns the new price of a computer as an int.
-// The price fluctuates from 17 to 26 bitcoin per computer.
+// Randomly sets the new price of computers
+// Returns the new price of a computer as an int
+// The price fluctuates from 17 to 26 bitcoin per computer
 func updateComputerPrice() int {
 	return rand.Intn(10) + 17
 }
 
-// printSummary prints the year-end summary
+// Prints the year-end summary
 func printSummary() {
 	fmt.Printf("%s!", OGH)
 	fmt.Println("")
@@ -133,8 +133,8 @@ func printSummary() {
 	fmt.Println("")
 }
 
-// buyComputers Allows the player to buy computers. If a valid amount is entered, the available cash is reduced
-// accordingly
+// Allows the player to buy computers
+// If a valid amount is entered, the available cash is reduced accordingly
 func buyComputers() {
 	question := "How many computers will you buy?"
 	computersToBuy := getNumber(question)
@@ -151,8 +151,8 @@ func buyComputers() {
 	fmt.Println(fmt.Sprintf("and %d bitcoins of cash.", cash))
 }
 
-// sellComputers allows the player to sell computers, if any are on hand. Available
-// cash will be increased by the value of the computers sold
+// Allows the player to sell computers, if any are on hand.
+// Available cash will be increased by the value of the computers sold
 func sellComputers() {
 	question := "How many computers will you sell?"
 	computersToSell := getNumber(question)
@@ -168,7 +168,7 @@ func sellComputers() {
 	fmt.Println(fmt.Sprintf("and %d bitcoins of cash.", cash))
 }
 
-// payEmployees allows the player to decide how much cash to use to feed people. If a valid
+// Allows the player to decide how much cash to use to feed people. If a valid
 // amount is entered, the available cash is reduced accordingly
 func payEmployees() {
 	question := "How much bitcoin will you distribute to the employees?"
@@ -183,7 +183,7 @@ func payEmployees() {
 	fmt.Println(fmt.Sprintf("%s, %d bitcoins remain.", OGH, cash))
 }
 
-// maintainComputers allows the user to choose how much to spend on maintenance
+// Allows the user to choose how much to spend on maintenance
 func maintainComputers() {
 	question := "How many bitcoins will you allocate for maintenance?"
 	maintenanceAmount := 0
@@ -206,7 +206,7 @@ func maintainComputers() {
 	fmt.Println(fmt.Sprintf("%s, we now have %d bitcoins in storage.", OGH, cash))
 }
 
-// checkForCrash checks for market crash, and counts the victims
+// Checks for market crash, and counts the victims
 func checkForCrash() int {
 	victims := 0
 
@@ -218,7 +218,7 @@ func checkForCrash() int {
 	return victims
 }
 
-// countNewHires counts how many new employees joined the company
+// Counts how many new employees joined the company
 func countNewHires() int {
 	var newEmployees int
 	if starved > 0 {
@@ -229,7 +229,7 @@ func countNewHires() int {
 	return newEmployees
 }
 
-// checkForHackers checks if hackers get into the system, and determines how much they stole.
+// Checks if hackers get into the system, and determines how much they stole.
 func checkForHackers() {
 	diceRoll := rand.Intn(99) + 1
 	if diceRoll < 40 {
@@ -242,14 +242,14 @@ func checkForHackers() {
 	}
 }
 
-// mineBitCoin collects the new cash mined
+// Collects the new cash mined
 func mineBitCoin(computers int) int {
 	bitcoinGeneratedPerComputer = rand.Intn(6) + 1
 	cashMined = bitcoinGeneratedPerComputer * computers
 	return cashMined
 }
 
-// countStarvedEmployees counts how many people starved, and removes them from the employees
+// Counts how many people starved, and removes them from the employees
 func countStarvedEmployees() int {
 	employeesPaid := cashPaidToEmployees / 20
 	percentStarved := 0
@@ -266,7 +266,7 @@ func countStarvedEmployees() int {
 	return percentStarved
 }
 
-// printFinalScore prints out the final score
+// Prints out the final score
 func printFinalScore() {
 	clearScreen()
 
@@ -305,7 +305,7 @@ Your final rating: SUPERB.`, OGH)
 	}
 }
 
-// GetYesOrNo allows the player to try again, or quit
+// Allows the player to try again, or quit
 func GetYesOrNo(q string) bool {
 	err := keyboard.Open()
 	if err != nil {
@@ -331,23 +331,22 @@ func GetYesOrNo(q string) bool {
 	}
 }
 
-// clearScreen clears the screen
+// Clears the screen
 func clearScreen() {
 	if strings.Contains(runtime.GOOS, "windows") {
-		// windows
+		// Windows
 		cmd := exec.Command("cmd", "/c", "cls")
 		cmd.Stdout = os.Stdout
 		cmd.Run()
 	} else {
-		// linux or mac
+		// Linux and Mac
 		cmd := exec.Command("clear")
 		cmd.Stdout = os.Stdout
 		cmd.Run()
 	}
 }
 
-// getNumber prints question q and asks for a number, then returns it
-// as an int
+// Prints question q and asks for a number, then returns it as an int
 func getNumber(q string) int {
 	reader := bufio.NewReader(os.Stdin)
 
@@ -367,7 +366,7 @@ func getNumber(q string) int {
 	}
 }
 
-// jest tells player that a request cannot be fulfilled
+// Tells player that a request cannot be fulfilled
 func jest(msg string) {
 	fmt.Println("")
 	color.Magenta("%s, you are dreaming!", OGH)
