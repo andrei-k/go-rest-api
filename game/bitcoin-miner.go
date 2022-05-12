@@ -70,7 +70,6 @@ func Play() {
 	}
 
 	printFinalScore()
-
 }
 
 // Prints the intro paragraph
