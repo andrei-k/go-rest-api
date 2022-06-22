@@ -2,14 +2,15 @@
 
 A simple CRUD REST API with Mux written in Go.
 
-Todo:
+## Todo
+- [ ] Original implementation entirely in main.go
 - [ ] Add documentation
 - [ ] Optimize directory structure
 - [ ] Use real database
 
 ---
 
-## Original spaghetti code
+## Original code entirely in main.go
 
 ```go
 package main
