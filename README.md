@@ -3,7 +3,7 @@
 A simple CRUD REST API with Mux written in Go.
 
 ## Todo
-- [ ] Original implementation entirely in main.go
+- [x] Original implementation entirely in main.go
 - [ ] Add documentation
 - [ ] Optimize directory structure
 - [ ] Use real database
