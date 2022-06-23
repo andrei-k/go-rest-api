@@ -9,6 +9,15 @@ import (
 	"github.com/gorilla/mux"
 )
 
+func CountBooks(w http.ResponseWriter, r *http.Request) {
+	var books []models.Book
+	// database.Instance.Find(&books)
+	count := len(books)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(count)
+}
+
 func GetBooks(w http.ResponseWriter, r *http.Request) {
 	// var books []models.Book
 	// database.Instance.Find(&books)
@@ -46,13 +55,4 @@ func bookExists(bookId string) bool {
 		return false
 	}
 	return true
-}
-
-func TotalBooks(w http.ResponseWriter, r *http.Request) {
-	var books []models.Book
-	// database.Instance.Find(&books)
-	count := len(books)
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(count)
 }

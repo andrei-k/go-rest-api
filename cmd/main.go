@@ -16,7 +16,7 @@ func main() {
 
 	server := &http.Server{
 		Addr: ":8080",
-		// Enforces timeouts for created server (good practice)
+		// Enforces timeouts for created server (good practice).
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
@@ -26,16 +26,16 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// Initialize the router
+	// Initializes the router
 	router := mux.NewRouter().StrictSlash(true)
 
-	// Register routes
+	// Registers routes
+	router.HandleFunc("/count", controllers.CountBooks).Methods("GET")
 	router.HandleFunc("/books", controllers.GetBooks).Methods("GET")
 	router.HandleFunc("/books/{id}", controllers.GetBook).Methods("GET")
 	// router.HandleFunc("/books", controllers.CreateBook).Methods("POST")
 	// router.HandleFunc("/books/{id}", controllers.UpdateBook).Methods("PUT")
 	// router.HandleFunc("/books/{id}", controllers.DeleteBook).Methods("DELETE")
-	router.HandleFunc("/total", controllers.TotalBooks).Methods("GET")
 
 	log.Println("Starting server on port 8080")
 	if err := http.ListenAndServe(":8080", router); err != nil {

@@ -23,7 +23,14 @@ type Author struct {
 	LastName  string `json:"lastName"`
 }
 
+// Holds all book data in memory.
 var books []Book
+
+func CountBooks(w http.ResponseWriter, r *http.Request) {
+	number := len(books)
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(number)
+}
 
 func GetBooks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
@@ -58,7 +65,6 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(book)
 }
 
-// UpdateBook updates a book in the books slice.
 func UpdateBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
@@ -76,7 +82,6 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// DeleteBook deletes a book from the books slice.
 func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var params = mux.Vars(r)
@@ -90,42 +95,22 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(books)
 }
 
-func TotalBooks(w http.ResponseWriter, r *http.Request) {
-	number := len(books)
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(number)
-}
-
 func main() {
-	// Create a few books to start with.
-	book1 := Book{
-		ID:    "1",
-		Title: "On Writing Well",
-		Author: &Author{
-			FirstName: "William",
-			LastName:  "Zinsser",
-		},
+	// Creates a few books as test data.
+	books = []Book{
+		{ID: "1", Title: "On Writing Well", Author: &Author{FirstName: "William", LastName: "Zinsser"}},
+		{ID: "2", Title: "Stein on Writing", Author: &Author{FirstName: "Sol", LastName: "Sol"}},
 	}
-	book2 := Book{
-		ID:    "2",
-		Title: "Stein on Writing",
-		Author: &Author{
-			FirstName: "Sol",
-			LastName:  "Stein",
-		},
-	}
-	books = append(books, book1)
-	books = append(books, book2)
 
-	// Creates a new router
+	// Initializes the router
 	router := mux.NewRouter()
-	// Register routes
+	// Registers routes
+	router.HandleFunc("/count", CountBooks).Methods("GET")
 	router.HandleFunc("/books", GetBooks).Methods("GET")
 	router.HandleFunc("/books/{id}", GetBook).Methods("GET")
 	router.HandleFunc("/books", CreateBook).Methods("POST")
 	router.HandleFunc("/books/{id}", UpdateBook).Methods("PUT")
 	router.HandleFunc("/books/{id}", DeleteBook).Methods("DELETE")
-	router.HandleFunc("/total", TotalBooks).Methods("GET")
 
 	log.Println("Starting server on port 8080")
 	if err := http.ListenAndServe(":8080", router); err != nil {
