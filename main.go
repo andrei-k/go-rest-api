@@ -23,22 +23,21 @@ type Author struct {
 	LastName  string `json:"lastName"`
 }
 
-// books is a slice of Book structs
 var books []Book
 
-// GetBooks returns all books in the books slice.
 func GetBooks(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(books)
 }
 
-// GetBook returns a book from the books slice.
 func GetBook(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
 	for _, item := range books {
 		// Checks to see if a book matches the ID passed in as a parameter.
 		if item.ID == params["id"] {
+			w.WriteHeader(http.StatusOK)
 			json.NewEncoder(w).Encode(item)
 			return
 		}
@@ -49,19 +48,19 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("No matching book found"))
 }
 
-// CreateBook adds a new book to the books slice.
 func CreateBook(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Content-Type", "application/json")
 	var book Book
 	_ = json.NewDecoder(r.Body).Decode(&book)
 	book.ID = strconv.Itoa((rand.Intn(100000)))
 	books = append(books, book)
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(book)
 }
 
 // UpdateBook updates a book in the books slice.
 func UpdateBook(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
 
 	for index, item := range books {
@@ -71,6 +70,7 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 			_ = json.NewDecoder(r.Body).Decode(&books)
 			book.ID = params["id"]
 			books = append(books, book)
+			w.WriteHeader(http.StatusOK)
 			json.NewEncoder(w).Encode(book)
 		}
 	}
@@ -78,7 +78,7 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 
 // DeleteBook deletes a book from the books slice.
 func DeleteBook(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("content-type", "application/json")
+	w.Header().Set("Content-Type", "application/json")
 	var params = mux.Vars(r)
 	for index, item := range books {
 		if item.ID == params["id"] {
@@ -86,7 +86,14 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(books)
+}
+
+func TotalBooks(w http.ResponseWriter, r *http.Request) {
+	number := len(books)
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(number)
 }
 
 func main() {
@@ -110,17 +117,18 @@ func main() {
 	books = append(books, book1)
 	books = append(books, book2)
 
-	// Creates a new router.
-	r := mux.NewRouter()
-	// Defines the routes.
-	r.HandleFunc("/books", GetBooks).Methods("GET")
-	r.HandleFunc("/books/{id}", GetBook).Methods("GET")
-	r.HandleFunc("/books", CreateBook).Methods("POST")
-	r.HandleFunc("/books/{id}", UpdateBook).Methods("PUT")
-	r.HandleFunc("/books/{id}", DeleteBook).Methods("DELETE")
+	// Creates a new router
+	router := mux.NewRouter()
+	// Register routes
+	router.HandleFunc("/books", GetBooks).Methods("GET")
+	router.HandleFunc("/books/{id}", GetBook).Methods("GET")
+	router.HandleFunc("/books", CreateBook).Methods("POST")
+	router.HandleFunc("/books/{id}", UpdateBook).Methods("PUT")
+	router.HandleFunc("/books/{id}", DeleteBook).Methods("DELETE")
+	router.HandleFunc("/total", TotalBooks).Methods("GET")
 
 	log.Println("Starting server on port 8080")
-	if err := http.ListenAndServe(":8080", r); err != nil {
+	if err := http.ListenAndServe(":8080", router); err != nil {
 		log.Fatal(err)
 	}
 }
