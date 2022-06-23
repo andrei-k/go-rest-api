@@ -25,7 +25,7 @@ The library code that can be imported and used by external projects should live 
 ### `/internal`
 Your code that is not meant to be reused by external projects should live in the `/internal` directory. Go ensures that these private packages aren't not importable.  
 
-Some notable examples of using this layout pattern include the official [Go Tools](https://github.com/golang/tools), (Kubernetes)[https://github.com/kubernetes/kubernetes], and [Docker](https://github.com/docker/compose).  
+Some notable examples of using this layout pattern include the official [Go Tools](https://github.com/golang/tools), [Kubernetes](https://github.com/kubernetes/kubernetes), and [Docker](https://github.com/docker/compose).  
 
 Good reference for the [Standard Go Project Layout](https://github.com/golang-standards/project-layout)
 
