@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/andrei-k/go-rest-api/pkg/database"
@@ -10,9 +11,10 @@ import (
 )
 
 func CountBooks(w http.ResponseWriter, r *http.Request) {
-	var books []models.Book
+	// var books []models.Book
 	// database.Instance.Find(&books)
-	count := len(books)
+	count := len(database.Books)
+	log.Println("Count: ", count)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(count)
