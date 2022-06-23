@@ -1,6 +1,6 @@
 # REST API with Go
 
-A simple REST API written in Go that performs CRUD operations for book management. This program also attempts to follow a clean folder structure  using best practices. Gorilla/mux is used to route incoming HTTP requests to the correct method handlers.
+A simple REST API written in Go that performs CRUD operations for book management. The purpose of this program is to demonstrate a clean folder structure using best practices. Gorilla/mux is used to route incoming HTTP requests to the correct method handlers.
 
 ## Project structure
 
@@ -8,9 +8,9 @@ The project layout uses the common pattern of splitting the code into the **cmd*
 
 The **cmd** layout pattern is useful when:
 - You need to have more than one application binary. Each binary gets its own directory (e.g., your_project/cmd/your_app).
-- Makes your project/package ‘go gettable’. It means you can use the **go get** command to fetch and install your project, its applications and its libraries (e.g., go get github.com/your_github_username/your_project/cmd/appxg).
+- Makes your project/package "go gettable", which means you can use the **go get** command to fetch and install your project, its applications and libraries (e.g., `go get github.com/andrei-k/go-rest-api/pkg`).
 
-The official Go tools is one example of the cmd layout patter. A number of other well known projects use the same pattern: Kubernetes, Docker, Prometheus, Influxdb.
+Some examples of **cmd** layout pattern include the official Go tools, Kubernetes, Docker, Prometheus, and Influxdb.
 
 ## Todo
 - [x] Original implementation entirely in main.go
@@ -20,8 +20,7 @@ The official Go tools is one example of the cmd layout patter. A number of other
 
 ---
 
-## Original code that was entirely in main.go
-One of my goals for this program is to organize the code into a better folder structure, rather than putting everything into a single main.go file.
+## Original code that was contained entirely in the main.go file
 
 ```go
 package main
