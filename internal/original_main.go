@@ -14,7 +14,7 @@ import (
 type Book struct {
 	ID     string  `json:"id"`
 	Title  string  `json:"title"`
-	Author *Author `json:"director"`
+	Author *Author `json:"author"`
 }
 
 // Author is a struct that holds an author's first and last names.
@@ -73,7 +73,7 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 		if item.ID == params["id"] {
 			books = append(books[:index], books[index+1:]...)
 			var book Book
-			_ = json.NewDecoder(r.Body).Decode(&books)
+			_ = json.NewDecoder(r.Body).Decode(&book)
 			book.ID = params["id"]
 			books = append(books, book)
 			w.WriteHeader(http.StatusOK)
