@@ -17,7 +17,7 @@ The project layout uses the common pattern of splitting the code into the **/cmd
 
 ### `/cmd`
 
-The `/cmd` contains the main applications for the project. If there is a need to have more than one application binary, the name of the subdirectory should match the name of the executable application (e.g., /cmd/myapp). It's best practice not to put a lot of code in the application directory.  
+The `/cmd` contains the main application entry points for the project. If there is a need to have more than one application binary, the name of the subdirectory should match the name of the executable application (e.g., /cmd/myapp). It's best practice not to put a lot of code in the application directory.  
 
 ### `/pkg`
 The library code that can be imported and used by external projects should live in `/pkg` directory. This layout pattern allows the package to be "go gettable", which means it's possible to use the **go get** command to fetch and install the project, its applications, and libraries (e.g., `go get github.com/andrei-k/go-rest-api/pkg`). Caution must be used with the code placed here because external projects will expect these libraries to work.  
