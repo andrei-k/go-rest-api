@@ -103,10 +103,12 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	// Create a few books as test data
-	books = []Book{
-		{ID: "1", Title: "On Writing Well", Author: Author{FirstName: "William", LastName: "Zinsser"}},
-		{ID: "2", Title: "Stein on Writing", Author: Author{FirstName: "Sol", LastName: "Sol"}},
-	}
+	// books = []Book{
+	// 	{ID: "1", Title: "On Writing Well", Author: Author{FirstName: "William", LastName: "Zinsser"}},
+	// 	{ID: "2", Title: "Stein on Writing", Author: Author{FirstName: "Sol", LastName: "Sol"}},
+	// }
+	books = append(books, Book{ID: "1", Title: "On Writing Well", Author: Author{FirstName: "William", LastName: "Zinsser"}})
+	books = append(books, Book{ID: "2", Title: "Stein on Writing", Author: Author{FirstName: "Sol", LastName: "Sol"}})
 
 	// Initialize the router
 	router := mux.NewRouter().StrictSlash(true)

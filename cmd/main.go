@@ -5,22 +5,14 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/andrei-k/go-rest-api/pkg/controllers"
+	"github.com/andrei-k/go-rest-api/pkg/routes"
 	"github.com/gorilla/mux"
 )
 
 func main() {
 	// Initialize the router
 	router := mux.NewRouter().StrictSlash(true)
-
-	// Register routes
-	router.HandleFunc("/count", controllers.CountBooks).Methods("GET")
-	router.HandleFunc("/books", controllers.GetBooks).Methods("GET")
-	router.HandleFunc("/books/{id}", controllers.GetBook).Methods("GET")
-	// Note: make sure the path doesn't have a trailing slash
-	router.HandleFunc("/books", controllers.CreateBook).Methods("POST")
-	router.HandleFunc("/books/{id}", controllers.UpdateBook).Methods("PUT")
-	router.HandleFunc("/books/{id}", controllers.DeleteBook).Methods("DELETE")
+	routes.RegisterBookRoutes(router)
 
 	server := &http.Server{
 		Addr: ":8080",
