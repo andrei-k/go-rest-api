@@ -10,10 +10,10 @@ import (
 )
 
 func main() {
-	// Initializes the router
+	// Initialize the router
 	router := mux.NewRouter().StrictSlash(true)
 
-	// Registers routes
+	// Register routes
 	router.HandleFunc("/count", controllers.CountBooks).Methods("GET")
 	router.HandleFunc("/books", controllers.GetBooks).Methods("GET")
 	router.HandleFunc("/books/{id}", controllers.GetBook).Methods("GET")
@@ -23,7 +23,7 @@ func main() {
 
 	server := &http.Server{
 		Addr: ":8080",
-		// Enforces timeouts
+		// Enforce timeouts, which is good practice
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 		Handler:      router,

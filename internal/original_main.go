@@ -42,7 +42,7 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
 	for _, item := range books {
-		// Checks to see if a book matches the ID passed in as a parameter.
+		// Check to see if a book matches the ID passed in as a parameter
 		if item.ID == params["id"] {
 			w.WriteHeader(http.StatusOK)
 			json.NewEncoder(w).Encode(item)
@@ -50,7 +50,7 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// Throws and error if no books match the parameter.
+	// Throw and error if no books match the parameter
 	w.WriteHeader(http.StatusForbidden)
 	w.Write([]byte("No matching book found"))
 }
@@ -96,15 +96,15 @@ func DeleteBook(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// Creates a few books as test data.
+	// Create a few books as test data
 	books = []Book{
 		{ID: "1", Title: "On Writing Well", Author: &Author{FirstName: "William", LastName: "Zinsser"}},
 		{ID: "2", Title: "Stein on Writing", Author: &Author{FirstName: "Sol", LastName: "Sol"}},
 	}
 
-	// Initializes the router
+	// Initialize the router
 	router := mux.NewRouter()
-	// Registers routes
+	// Register routes
 	router.HandleFunc("/count", CountBooks).Methods("GET")
 	router.HandleFunc("/books", GetBooks).Methods("GET")
 	router.HandleFunc("/books/{id}", GetBook).Methods("GET")
