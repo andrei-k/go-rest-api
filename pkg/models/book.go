@@ -6,4 +6,5 @@ type Book struct {
 	Author Author `json:"author"`
 }
 
+// Defines the slice of structs holding books.
 type Books []Book

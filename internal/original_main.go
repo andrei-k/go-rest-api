@@ -12,9 +12,9 @@ import (
 
 // Book is a struct that holds a book's ID, title, and author.
 type Book struct {
-	ID     string  `json:"id"`
-	Title  string  `json:"title"`
-	Author *Author `json:"author"`
+	ID     string `json:"id"`
+	Title  string `json:"title"`
+	Author Author `json:"author"`
 }
 
 // Author is a struct that holds an author's first and last names.
