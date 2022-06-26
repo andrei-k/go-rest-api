@@ -10,7 +10,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// Book is a struct that holds a book's id, title, and author.
+// Book is a struct that holds a book's ID, title, and author.
 type Book struct {
 	ID     string  `json:"id"`
 	Title  string  `json:"title"`
@@ -50,18 +50,19 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// Throw and error if no books match the parameter
-	w.WriteHeader(http.StatusForbidden)
-	w.Write([]byte("No matching book found"))
+	// Throw and error if no book matches the ID
+	w.WriteHeader(http.StatusNotFound)
+	w.Write([]byte("Book not found"))
 }
 
 func CreateBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var book Book
 	_ = json.NewDecoder(r.Body).Decode(&book)
+	// Generate a random ID
 	book.ID = strconv.Itoa((rand.Intn(100000)))
 	books = append(books, book)
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(book)
 }
 
@@ -78,8 +79,13 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 			books = append(books, book)
 			w.WriteHeader(http.StatusOK)
 			json.NewEncoder(w).Encode(book)
+			return
 		}
 	}
+
+	// Throw and error if no book matches the ID
+	w.WriteHeader(http.StatusNotFound)
+	w.Write([]byte("Book not found"))
 }
 
 func DeleteBook(w http.ResponseWriter, r *http.Request) {
@@ -103,11 +109,13 @@ func main() {
 	}
 
 	// Initialize the router
-	router := mux.NewRouter()
+	router := mux.NewRouter().StrictSlash(true)
+
 	// Register routes
 	router.HandleFunc("/count", CountBooks).Methods("GET")
 	router.HandleFunc("/books", GetBooks).Methods("GET")
 	router.HandleFunc("/books/{id}", GetBook).Methods("GET")
+	// Note: make sure the path doesn't have a trailing slash
 	router.HandleFunc("/books", CreateBook).Methods("POST")
 	router.HandleFunc("/books/{id}", UpdateBook).Methods("PUT")
 	router.HandleFunc("/books/{id}", DeleteBook).Methods("DELETE")

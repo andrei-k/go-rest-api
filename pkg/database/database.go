@@ -4,8 +4,8 @@ import (
 	"github.com/andrei-k/go-rest-api/pkg/models"
 )
 
-// Creates a few books as test data.
-// TODO: Use a real database.
+// Create a few books as test data
+// TODO: Use a real database
 var Books = models.Books{
 	models.Book{
 		ID:    "1",
